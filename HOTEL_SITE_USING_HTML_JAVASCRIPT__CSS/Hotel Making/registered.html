@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Registered</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <h1>Thank you for registering!</h1>
+        <p class="nameR"></p>
+        <p class="emailR"></p>
+        <p class="phoneR"></p>
+        <p class="noOfAdultR"></p>
+        <p class="noOfChildR"></p>
+        <p class="checkin-dateR"></p>
+        <p class="checkout-dateR"></p>
+        <p class="room-preferenceR"></p>
+        <p class="room-selectionR"></p>
+        <p class="messageR"></p>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
+            import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js";
+
+
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+            apiKey: "AIzaSyAORSZJCJntWP6nwDV_yqJQZLzLLN7QHmo",
+            authDomain: "hotel-booking-9879b.firebaseapp.com",
+            projectId: "hotel-booking-9879b",
+            storageBucket: "hotel-booking-9879b.appspot.com",
+            messagingSenderId: "235029235677",
+            appId: "1:235029235677:web:be81868407b3fb95b5d834"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            const email = document.querySelector('.email');
+            const name = document.querySelector('.name');
+            const phone = document.querySelector('.phone');
+            const adult = document.querySelector('.noOfAdult');
+            const child = document.querySelector('.noOfChild');
+            const checkin = document.querySelector('.checkin-date');
+            const checkout = document.querySelector('.checkout-date');
+            const room = document.querySelector('.room-selection');
+            const message = document.querySelector('.message');
+            const submit = document.querySelector('.submit');
+
+            submit.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("hiii")
+            console.log(name.value)
+            setDoc(doc(db, "userData", name.value), {
+                name: name.value,
+                email: email.value,
+                phone: phone.value,
+                adult: adult.value,
+                child: child.value,
+                checkin: checkin.value,
+                checkout: checkout.value,
+                room: room.value,
+                message: message.value
+
+            });
+            console.log("hiii")
+            })
+      </script>
+    </body>
+</html>

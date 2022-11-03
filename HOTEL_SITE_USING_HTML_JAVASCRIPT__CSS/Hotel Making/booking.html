@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/style.css" rel="stylesheet" type="text/css"  media="all" />
+  </head>
+  <body>
+    <form class="contact-form">
+      <div class="elem-group">
+        <label for="name">Your Name</label>
+        <input type="text" class="name" name="visitor_name" placeholder="John Doe" pattern=[A-Z\sa-z]{1,20} required>
+      </div>
+      <div class="elem-group">
+        <label for="email">Your E-mail</label>
+        <input type="email" class="email" name="visitor_email" placeholder="john.doe@email.com" required>
+      </div>
+      <div class="elem-group">
+        <label for="phone">Your Phone</label>
+        <input type="tel" class="phone" name="visitor_phone" placeholder="498-348-3872" pattern=(\d{3})-?\s?(\d{3})-?\s?(\d{4}) required>
+      </div>
+      <hr>
+      <div class="elem-group inlined">
+        <label for="adult">Adults</label>
+        <input type="number" class="noOfAdult" name="total_adults" placeholder="2" min="1" required>
+      </div>
+      <div class="elem-group inlined">
+        <label for="child">Children</label>
+        <input type="number" class="noOfChild" name="total_children" placeholder="2" min="0" required>
+      </div>
+      <div class="elem-group inlined">
+        <label for="checkin-date">Check-in Date</label>
+        <input type="date" class="checkin-date" name="checkin" required>
+      </div>
+      <div class="elem-group inlined">
+        <label for="checkout-date">Check-out Date</label>
+        <input type="date" class="checkout-date" name="checkout" required>
+      </div>
+      <div class="elem-group">
+        <label for="room-preference">Select Room Preference</label>
+        <select class="room-preference" name="room_preference" required>
+            <option value="">Choose a Room from the List</option>
+            <option value="SINGLE">SINGLE</option>
+            <option value="SINGLE">DOUBLE</option>
+        </select>
+      </div>
+      <div class="elem-group">
+          <label for="room-selection">Select Room type</label>
+          <select class="room-selection" name="room_preference" required>
+              <option value="">Choose a Room from the List</option>
+              <option value="ROOM 1 - $1000">ROOM 1</option>
+              <option value="ROOM 2 - $1200">ROOM 2</option>
+              <option value="ROOM 3 - $1400">ROOM 3</option>
+              <option value="ROOM 4 - $1600">ROOM 4</option>
+              <option value="ROOM 5 - $1800">ROOM 5</option>
+              <option value="ROOM 6 - $2000">ROOM 6</option>
+          </select>
+        </div>
+      <hr>
+      <!-- <div class="elem-group">
+        <label for="message">Anything Else?</label>
+        <textarea class="message" name="visitor_message" placeholder="Tell us anything else that might be important." required></textarea>       //111111
+      </div> -->
+      <button type="submit" class="submit">Book The Rooms</button>
+      
+    
+    </form>
+    <p id="successR" class="successR"></p>
+    <p id="nameR"></p>
+    <p id="emailR"></p>
+    <p id="phoneR"></p>
+    <p id="noOfAdultR"></p>
+    <p id="noOfChildR"></p>
+    <p id="checkin-dateR"></p>
+    <p id="checkout-dateR"></p>
+    <p id="room-preferenceR"></p>
+    <p id="room-selectionR"></p>                                                                                                                         
+    <!-- <p id="messageR"></p>                                                                                                                   //222222222 -->
+  
+
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js";
+
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAORSZJCJntWP6nwDV_yqJQZLzLLN7QHmo",
+      authDomain: "hotel-booking-9879b.firebaseapp.com",
+      projectId: "hotel-booking-9879b",
+      storageBucket: "hotel-booking-9879b.appspot.com",
+      messagingSenderId: "235029235677",
+      appId: "1:235029235677:web:be81868407b3fb95b5d834"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    //const success = document.getElementById('.success');
+    const email = document.querySelector('.email');
+    const name = document.querySelector('.name');
+    const phone = document.querySelector('.phone');
+    const adult = document.querySelector('.noOfAdult');
+    const child = document.querySelector('.noOfChild');
+    const checkin = document.querySelector('.checkin-date');
+    const checkout = document.querySelector('.checkout-date');
+    const roomSelection = document.querySelector('.room-selection');
+    const roomPreference = document.querySelector('.room-preference');
+    // const message = document.querySelector('.message');                                                  //33333333
+    const submit = document.querySelector('.submit');
+
+    submit.addEventListener('click', (e) => {
+      e.preventDefault();
+      setDoc(doc(db, "userData", name.value), {
+        name: name.value,
+        email: email.value,
+        phone: phone.value,
+        adult: adult.value,
+        child: child.value,
+        checkin: checkin.value,
+        checkout: checkout.value,
+        roomPreference: roomPreference.value,
+        roomSelection: roomSelection.value,
+        // message: message.value                                                                           //444444444444
+
+      });
+
+      
+      document.querySelector('.contact-form').innerHTML =""
+      // document.querySelector('.name').innerHTML =""
+      // document.querySelector('.phone').innerHTML =""
+      // document.querySelector('.noOfAdult').innerHTML =""
+      // document.querySelector('.noOfChild').innerHTML =""
+      // document.querySelector('.checkin-date').innerHTML =""
+      // document.querySelector('.checkout-date').innerHTML =""
+      // document.querySelector('.room-selection').innerHTML =""
+      // document.querySelector('.room-preference').innerHTML =""
+      // document.querySelector('.message').innerHTML =""
+      document.getElementById('successR').innerHTML = "Your Booking is Confirmed";
+      document.getElementById('nameR').innerHTML = "Name:"+name.value;
+      document.getElementById('emailR').innerHTML = "Email:"+email.value;
+      document.getElementById('phoneR').innerHTML = "Phone:"+phone.value;
+      document.getElementById('noOfAdultR').innerHTML = "No Of Adults:" + adult.value;
+      document.getElementById('noOfChildR').innerHTML = "No Of Children:"+child.value;
+      document.getElementById('checkin-dateR').innerHTML = "Check in Date:"+checkin.value;
+      document.getElementById('checkout-dateR').innerHTML = "Check out Date:"+checkout.value;
+      document.getElementById('room-selectionR').innerHTML = "Room Selction:"+roomSelection.value;
+      document.getElementById('room-preferenceR').innerHTML = "Room Preference:"+roomPreference.value;
+      // document.getElementById('messageR').innerHTML = "Message:"+message.value;                                       //55555555555555
+
+
+    })
+    </script>
+    
+
+  </body>
+</html>
+
+
